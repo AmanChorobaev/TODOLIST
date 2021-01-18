@@ -25,6 +25,7 @@ urlpatterns = [
     path("test/", test, name="test"),
     path("test2/", second)
     
+    
 
 
 ]   + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
