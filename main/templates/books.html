@@ -1,27 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Books</title>
-</head>
-<body>
-  
-  <div class="create_container">
-    <form action="{%url 'add-book' %}" method="POST">
-      {% csrf_token%}
-      <input class="create_input" type="text" placeholder="Напишите заголовок" name="book_text">
-      <input class="create_input" type="text" placeholder="Напишите подзаголовок" name="book.subtitle">
-      <input class="create_input" type="text" placeholder="Напишите описание" name="book.description">
-      <input class="create_input" type="text" placeholder="Напишите цену" name="book.price">
-      <input class="create_input" type="text" placeholder="Напишите жанр" name="book.genre">
-      <input class="create_input" type="text" placeholder="Напишите автора" name="book.author">
-      <input class="create_input" type="text" placeholder="Напишите год выхода книги" name="book.year">
-      <button id="create_button">Добавить</button>
-    </form>
-  </div>
-
-
-
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Books</title>
+  </head>
+  <body>
+    <section>
+      <div class="create">
+        <form action="{% url 'add-book' %}" method="POST">
+          {% csrf_token %}
+          <input
+            class="inp"
+            type="text"
+            placeholder="Title"
+            name="book_title"
+          />
+          <input
+            class="inp"
+            type="text"
+            placeholder="Subtitle"
+            name="book_subtitle"
+          />
+          <input
+            class="inp"
+            type="text"
+            placeholder="Description"
+            name="book_description"
+          />
+          <input
+            class="inp"
+            type="text"
+            placeholder="Price"
+            name="book_price"
+          />
+          <input
+            class="inp"
+            type="text"
+            placeholder="Genre"
+            name="book_genre"
+          />
+          <input
+            class="inp"
+            type="text"
+            placeholder="Author"
+            name="book_author"
+          />
+          <input class="inp" type="text" placeholder="Year" name="book_year" />
+          <input class="but" type="submit" value="Добавить книгу" />
+        </form>
+      </div>
+      <div class="book_container">
+        {% for b in books_list %}
+        <div class="book_item">
+          <h4>{{ b.title }}</h4>
+          <h6>{{ b.subtitle }}</h6>
+          <p>{{ b.author }}</p>
+          <p>{{ b.genre }}</p>
+          <p>{{ b.year }}</p>
+          <p>{{ b.description }}</p>
+          <p>{{ b.price }}</p>
+          <p>{{ b.date }}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    
+  </body>
 </html>
