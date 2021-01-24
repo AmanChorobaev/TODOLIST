@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
-from .models import ToDo
+from .models import ToDo, Books
 
 
 def homepage(request):
@@ -28,12 +28,23 @@ def add_todo(request):
     todo.save()
     return redirect(test)
 
+def add_book(request):
+    form = request.POST
+    title = form["book_title"]
+    subtitle = form["book_subtitle"]
+    author = form["book_author"]
+    price = form["book_price"]
+    genre = form["book_genre"]
+    description = form["book_description"]
+    year = form["book_year"]
+    b = Books(title=title, subtitle = subtitle, author=author, price=price, genre=genre, description=description, year=year)
+    b.save()
+    return redirect(books)
 
 def delete_todo(request, id):
     todo = ToDo.objects.get(id=id)
     todo.delete()
     return redirect(test)
-
 
 def mark_todo(request, id):
     todo = ToDo.objects.get(id=id)
@@ -41,6 +52,34 @@ def mark_todo(request, id):
     todo.save()
     return redirect(test)
 
+def unmark_todo(request, id):
+    todo = ToDo.objects.get(id=id)
+    todo.is_favorite = False
+    todo.save()
+    return redirect(test)
+
+
+def delete_book(request, id):
+    b = Books.objects.get(id=id)
+    b.delete()
+    return redirect(books)
+
+def mark_book(request, id):
+    b = Books.objects.get(id=id)
+    b.is_favorites = True
+    b.save()
+    return redirect(books)
+
+def unmark_book(request, id):
+    b = Books.objects.get(id=id)
+    b.is_favorites = False
+    b.save()
+    return redirect(books)
+
+
+def BooksDetail(request, id):
+    book_object = Books.objects.get(id=id)
+    return render(request, "book_detail.html", {"book_object": book_object})
 
 def close_todo(request, id):
     todo = ToDo.objects.get(id=id)
